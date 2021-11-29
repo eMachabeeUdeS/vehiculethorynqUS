@@ -66,7 +66,7 @@ class vehicle:
             self._speedprct = percent
         # Calculer les deux vitesses (extérieure et intérieure)
         radius = angle_to_radius(self._wheel_angle)
-        if _wheel_angle = 0: # Centre
+        if _wheel_angle == 0: # Centre
             self.bw.speed(percent, percent)
         elif _wheel_angle < 0: # Gauche
             circonleft = np.abs((radius - TRACK / 2) * 2 * np.pi)
