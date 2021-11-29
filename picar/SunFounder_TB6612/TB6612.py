@@ -31,7 +31,7 @@ class Motor(object):
 		self.direction_channel = direction_channel
 		self._pwm = pwm
 		self._offset = offset
-		self.forward_offset = self._offset
+		self.forward_offset = not self._offset
 
 		self.backward_offset = not self.forward_offset
 		self._speed = 0
