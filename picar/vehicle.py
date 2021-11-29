@@ -62,7 +62,7 @@ class vehicle:
         elif percent > 100:
             self._speedprct = 100
             return
-        else
+        else:
             self._speedprct = percent
         # Calculer les deux vitesses (extérieure et intérieure)
         radius = angle_to_radius(self._wheel_angle)
