@@ -85,11 +85,14 @@ class Back_Wheels(object):
 		return self._speed
 
 	@speed.setter
-	def speed(self, speed):
-		self._speed = speed
+	def speed(self, speedleft, speedright):
+		if speedleft >= speedright:
+			self._speed = speedleft
+		else:
+			self._speed = speedright
 		''' Set moving speeds '''
-		self.left_wheel.speed = self._speed
-		self.right_wheel.speed = self._speed
+		self.left_wheel.speed = speedleft
+		self.right_wheel.speed = speedright
 		self._debug_('Set speed to %s' % self._speed)
 
 	@property
