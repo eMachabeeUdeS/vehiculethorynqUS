@@ -13,21 +13,15 @@ from picar import back_wheels
 from picar import front_wheels
 import time
 import picar
+import numpy as np
 
 class vehicle:
-
-    VEHICLE_STATES = {
-    'STOP' : 0,
-    'FORWARD' : 1,
-    'BACKWARD' : 2,
-    }
 
     WHEELBASE = 0.14 # 14cm d'empattement
     TRACK = 0.1143 # 11cm de voie
 
     _speedprct = 0 # Vitesse de la roue la plus rapide en pourcentage
     _wheel_angle = 0 # Angle des roues, 0 est le centre
-    _state = VEHICLE_STATES['STOP'] # État, 0 = stop, 1 = avancer, 2 = arrêté
 
     def __init__(self):
         picar.setup()
@@ -104,16 +98,13 @@ class vehicle:
 
     # Avancer
     def forward(self):
-        self._state = VEHICLE_STATES['FORWARD']
         self.bw.forward()
 
     # Reculer
     def backward(self):
-        self._state = VEHICLE_STATES['BACKWARD']
         self.bw.backward()
 
     # Arrêter
     def stop(self):
         self._speedprct = 0
-        self._state = VEHICLE_STATES['STOP']
         self.bw.stop()
