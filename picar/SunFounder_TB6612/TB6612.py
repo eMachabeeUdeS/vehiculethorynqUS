@@ -31,7 +31,7 @@ class Motor(object):
 		self.direction_channel = direction_channel
 		self._pwm = pwm
 		self._offset = offset
-		self.forward_offset = not self._offset
+		self.forward_offset = self._offset
 
 		self.backward_offset = not self.forward_offset
 		self._speed = 0
@@ -62,17 +62,19 @@ class Motor(object):
 		self._speed = speed
 		self._pwm(self._speed)
 
-	def forward(self):
-		''' Set the motor direction to forward '''
+	def backward(self):
+		# They are inverted because reasons, so we had to flipped them - EM
+		''' Set the motor direction to backward '''
 		GPIO.output(self.direction_channel, self.forward_offset)
 		self.speed = self._speed
-		self._debug_('Motor moving forward (%s)' % str(self.forward_offset))
+		self._debug_('Motor moving backward (%s)' % str(self.forward_offset))
 
-	def backward(self):
-		''' Set the motor direction to backward '''
+	def forward(self):
+		# They are inverted because reasons, so we had to flipped them - EM
+		''' Set the motor direction to forward '''
 		GPIO.output(self.direction_channel, self.backward_offset)
 		self.speed = self._speed
-		self._debug_('Motor moving backward (%s)' % str(self.backward_offset))
+		self._debug_('Motor moving forward (%s)' % str(self.backward_offset))
 
 	def stop(self):
 		''' Stop the motor by giving a 0 speed '''
