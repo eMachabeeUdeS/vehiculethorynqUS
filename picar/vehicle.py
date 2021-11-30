@@ -61,7 +61,7 @@ class vehicle:
         else:
             self._speedprct = percent
         # Calculer les deux vitesses (extérieure et intérieure)
-        radius = angle_to_radius(self._wheel_angle)
+        radius = self.angle_to_radius(self._wheel_angle)
         if self._wheel_angle == 0: # Centre
             self.bw.speed(percent, percent)
         elif self._wheel_angle < 0: # Gauche
@@ -127,10 +127,10 @@ def test():
         v.turn(105)
         sleep(500)
     except:
-        back_wheels.stop()
+        v.stop()
     finally:
         print("Finished, motor stop")
-        vehicle.stop()
+        v.stop()
 
 if __name__ == '__main__':
     test()
