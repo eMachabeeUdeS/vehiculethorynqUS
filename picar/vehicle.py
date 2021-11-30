@@ -62,16 +62,16 @@ class vehicle:
             self._speedprct = percent
         # Calculer les deux vitesses (extérieure et intérieure)
         radius = angle_to_radius(self._wheel_angle)
-        if _wheel_angle == 0: # Centre
+        if self._wheel_angle == 0: # Centre
             self.bw.speed(percent, percent)
-        elif _wheel_angle < 0: # Gauche
+        elif self._wheel_angle < 0: # Gauche
             circonleft = np.abs((radius - TRACK / 2) * 2 * np.pi)
             circonright = np.abs((radius + TRACK / 2) * 2 * np.pi)
             ratio = circonleft / circonright
             speedleft = percent * ratio
             speedright = percent
             self.bw.speed(speedleft, speedright)
-        elif _wheel_angle > 0: # Droite
+        elif self._wheel_angle > 0: # Droite
             circonleft = np.abs((radius + TRACK / 2) * 2 * np.pi)
             circonright = np.abs((radius - TRACK / 2) * 2 * np.pi)
             ratio = circonright / circonleft
@@ -126,8 +126,7 @@ def test():
         sleep(500)
         v.turn(105)
         sleep(500)
-    except KeyboardInterrupt:
-        print("KeyboardInterrupt, motor stop")
+    except:
         back_wheels.stop()
     finally:
         print("Finished, motor stop")
@@ -135,4 +134,3 @@ def test():
 
 if __name__ == '__main__':
     test()
-
