@@ -84,15 +84,15 @@ class Back_Wheels(object):
 	def speed(self, speed):
 		return self._speed
 
-	@speed.setter
+	# Inverser la roue gauche et droite parce que c'est à l'envers
 	def speed(self, speedleft, speedright):
 		if speedleft >= speedright:
 			self._speed = speedleft
 		else:
 			self._speed = speedright
 		''' Set moving speeds '''
-		self.left_wheel.speed = speedleft
-		self.right_wheel.speed = speedright
+		self.left_wheel.speed = speedright
+		self.right_wheel.speed = speedleft
 		self._debug_('Set speed to %s' % self._speed)
 
 	@property
