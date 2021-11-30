@@ -50,6 +50,8 @@ class vehicle:
     # Ajuste la vitesse du robot, équivalent à la librairie du robot
     # Crée un différentiel pour les virages, rendant le rayon de virage plus bas
     def speed(self, percent):
+        print("Percent: ", percent)
+        print("_wheel_angle: ", self._wheel_angle)
         if percent < 0:
             self._speedprct = 0
             return
@@ -76,6 +78,10 @@ class vehicle:
             speedleft = percent
             speedright = percent * ratio
             self.bw.speed(speedleft, speedright)
+        print("circonleft: ", circonleft)
+        print("circonright: ", circonright)
+        print("speedleft: ", speedleft)
+        print("speedright: ", speedright)
 
     # Mettre les roues droites
     def turn_straight(self):
@@ -108,3 +114,25 @@ class vehicle:
     def stop(self):
         self._speedprct = 0
         self.bw.stop()
+
+def test():
+    import time
+    v = vehicle();
+    DELAY = 0.01
+    try:
+        v.forward()
+        v.speed(100)
+        v.turn_left()
+        sleep(500)
+        v.turn(105)
+        sleep(500)
+    except KeyboardInterrupt:
+        print("KeyboardInterrupt, motor stop")
+        back_wheels.stop()
+    finally:
+        print("Finished, motor stop")
+        vehicle.stop()
+
+if __name__ == '__main__':
+    test()
+
