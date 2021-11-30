@@ -15,7 +15,7 @@ import time
 import picar
 import numpy as np
 
-class vehicle:
+class Vehicle:
 
     WHEELBASE = 0.14 # 14cm d'empattement
     TRACK = 0.1143 # 11cm de voie
@@ -41,7 +41,7 @@ class vehicle:
         try:
             # print("Angle commandé:", angle)
             if angle <= np.pi/2:
-                radius = WHEELBASE/np.tan(angle)
+                radius = self.WHEELBASE/np.tan(angle)
         except:
             print("Erreur de calcul du rayon")
             return 0
@@ -54,35 +54,42 @@ class vehicle:
         print("_wheel_angle: ", self._wheel_angle)
         if percent < 0:
             self._speedprct = 0
+            print("Percent bellow 0, setting to 0")
             return
         elif percent > 100:
             self._speedprct = 100
+            print("Percent above 100, setting to 100")
             return
         else:
             self._speedprct = percent
+            print("Speed set to: ", percent)
         # Calculer les deux vitesses (extérieure et intérieure)
         if self._wheel_angle == 0: # Centre
             self.bw.speed(percent, percent)
+            print("Centre")
         elif self._wheel_angle < 0: # Gauche
             radius = self.angle_to_radius(self._wheel_angle)
-            circonleft = np.abs((radius - TRACK / 2) * 2 * np.pi)
-            circonright = np.abs((radius + TRACK / 2) * 2 * np.pi)
+            circonleft = np.abs((radius - self.TRACK / 2) * 2 * np.pi)
+            circonright = np.abs((radius + self.TRACK / 2) * 2 * np.pi)
             ratio = circonleft / circonright
             speedleft = percent * ratio
             speedright = percent
             self.bw.speed(speedleft, speedright)
         elif self._wheel_angle > 0: # Droite
-        radius = self.angle_to_radius(self._wheel_angle)
-            circonleft = np.abs((radius + TRACK / 2) * 2 * np.pi)
-            circonright = np.abs((radius - TRACK / 2) * 2 * np.pi)
+            radius = self.angle_to_radius(self._wheel_angle)
+            print("radius: ", radius)
+            circonleft = np.abs((radius + self.TRACK / 2) * 2 * np.pi)
+            print("Circonleft: ", circonleft)
+            circonright = np.abs((radius - self.TRACK / 2) * 2 * np.pi)
             ratio = circonright / circonleft
+            print("ratio", ratio)
             speedleft = percent
             speedright = percent * ratio
             self.bw.speed(speedleft, speedright)
-        print("circonleft: ", circonleft)
-        print("circonright: ", circonright)
-        print("speedleft: ", speedleft)
-        print("speedright: ", speedright)
+            print("circonleft: ", circonleft)
+            print("circonright: ", circonright)
+            print("speedleft: ", speedleft)
+            print("speedright: ", speedright)
 
     # Mettre les roues droites
     def turn_straight(self):
@@ -102,6 +109,9 @@ class vehicle:
         if angle >= 0:
             self._wheel_angle = np.radians(90-angle)
             self.fw.turn(angle)
+            print("Roues tournées")
+            return
+            #self.speed(self._speedprct)
 
     # Avancer
     def forward(self):
@@ -118,17 +128,17 @@ class vehicle:
 
 def test():
     import time
-    v = vehicle();
-    DELAY = 0.01
+    v = Vehicle()
     try:
         v.forward()
         v.speed(100)
-        v.turn_left()
-        sleep(500)
-        v.turn(105)
-        sleep(500)
+        v.turn(65)
+        time.sleep(1)
+        v.turn(125)
+        time.sleep(5)
     except:
         v.stop()
+        print("Error, stopping")
     finally:
         print("Finished, motor stop")
         v.stop()
