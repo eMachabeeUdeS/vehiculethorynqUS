@@ -61,21 +61,21 @@ class Vehicle:
         # Calculer les deux vitesses (extérieure et intérieure)
         if self._wheel_angle == 0: # Centre
             self.bw.speed(percent, percent)
-        elif self._wheel_angle < 0: # Gauche
+        elif self._wheel_angle < 0: # Droite
             radius = self.angle_to_radius(np.abs(self._wheel_angle))
             circonleft = np.abs((radius - self.TRACK / 2) * 2 * np.pi)
             circonright = np.abs((radius + self.TRACK / 2) * 2 * np.pi)
             ratio = circonleft / circonright
-            speedleft = percent * ratio
-            speedright = percent
+            speedleft = percent 
+            speedright = percent * ratio
             self.bw.speed(int(speedleft), int(speedright))
-        elif self._wheel_angle > 0: # Droite
+        elif self._wheel_angle > 0: # Gauche
             radius = self.angle_to_radius(self._wheel_angle)
             circonleft = np.abs((radius + self.TRACK / 2) * 2 * np.pi)
             circonright = np.abs((radius - self.TRACK / 2) * 2 * np.pi)
             ratio = circonright / circonleft
-            speedleft = percent
-            speedright = percent * ratio
+            speedleft = percent * ratio
+            speedright = percent 
             self.bw.speed(int(speedleft), int(speedright))
 
     # Mettre les roues droites
