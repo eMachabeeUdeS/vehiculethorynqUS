@@ -87,11 +87,11 @@ class Vehicle:
 
     # Tourner à gauche au max
     def turn_left(self):
-        self.turn(MAXLEFTANGLE)
+        self.turn(self.MAXLEFTANGLE)
 
     # Tourner à droite au max
     def turn_right(self):
-        self.turn(MAXRIGHTANGLE)
+        self.turn(self.MAXRIGHTANGLE)
 
     # Tourner à un angle, en degrés. 90 est tout droit.
     def turn(self, angle):
