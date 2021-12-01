@@ -50,46 +50,33 @@ class Vehicle:
     # Ajuste la vitesse du robot, équivalent à la librairie du robot
     # Crée un différentiel pour les virages, rendant le rayon de virage plus bas
     def speed(self, percent):
-        print("Percent: ", percent)
-        print("_wheel_angle: ", self._wheel_angle)
         if percent < 0:
             self._speedprct = 0
-            print("Percent bellow 0, setting to 0")
             return
         elif percent > 100:
             self._speedprct = 100
-            print("Percent above 100, setting to 100")
             return
         else:
             self._speedprct = percent
-            print("Speed set to: ", percent)
         # Calculer les deux vitesses (extérieure et intérieure)
         if self._wheel_angle == 0: # Centre
             self.bw.speed(percent, percent)
-            print("Centre")
         elif self._wheel_angle < 0: # Gauche
-            radius = self.angle_to_radius(self._wheel_angle)
+            radius = self.angle_to_radius(np.abs(self._wheel_angle))
             circonleft = np.abs((radius - self.TRACK / 2) * 2 * np.pi)
             circonright = np.abs((radius + self.TRACK / 2) * 2 * np.pi)
             ratio = circonleft / circonright
             speedleft = percent * ratio
             speedright = percent
-            self.bw.speed(speedleft, speedright)
+            self.bw.speed(int(speedleft), int(speedright))
         elif self._wheel_angle > 0: # Droite
             radius = self.angle_to_radius(self._wheel_angle)
-            print("radius: ", radius)
             circonleft = np.abs((radius + self.TRACK / 2) * 2 * np.pi)
-            print("Circonleft: ", circonleft)
             circonright = np.abs((radius - self.TRACK / 2) * 2 * np.pi)
             ratio = circonright / circonleft
-            print("ratio", ratio)
             speedleft = percent
             speedright = percent * ratio
-            self.bw.speed(speedleft, speedright)
-            print("circonleft: ", circonleft)
-            print("circonright: ", circonright)
-            print("speedleft: ", speedleft)
-            print("speedright: ", speedright)
+            self.bw.speed(int(speedleft), int(speedright))
 
     # Mettre les roues droites
     def turn_straight(self):
@@ -109,9 +96,8 @@ class Vehicle:
         if angle >= 0:
             self._wheel_angle = np.radians(90-angle)
             self.fw.turn(angle)
-            print("Roues tournées")
+            self.speed(self._speedprct)
             return
-            #self.speed(self._speedprct)
 
     # Avancer
     def forward(self):
