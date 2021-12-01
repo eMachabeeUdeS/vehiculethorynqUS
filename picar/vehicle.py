@@ -83,7 +83,7 @@ class Vehicle:
     # Mettre les roues droites
     def turn_straight(self):
         self._wheel_angle = np.radians(90-90)
-        self.turn(0)
+        self.turn(90)
 
     # Tourner à gauche au max
     def turn_left(self):
