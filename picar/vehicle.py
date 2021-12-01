@@ -19,6 +19,8 @@ class Vehicle:
 
     WHEELBASE = 0.14 # 14cm d'empattement
     TRACK = 0.1143 # 11cm de voie
+    MAXLEFTANGLE = 45 # 45 degrés au max à gauche
+    MAXRIGHTANGLE = 135 # 135 degrés au max à droite
 
     _speedprct = 0 # Vitesse de la roue la plus rapide en pourcentage
     _wheel_angle = 0 # Angle des roues, 0 est le centre
@@ -81,15 +83,15 @@ class Vehicle:
     # Mettre les roues droites
     def turn_straight(self):
         self._wheel_angle = np.radians(90-90)
-        self.fw.turn_straight()
+        self.turn(0)
 
     # Tourner à gauche au max
     def turn_left(self):
-        self.fw.turn_left()
+        self.turn(MAXLEFTANGLE)
 
     # Tourner à droite au max
     def turn_right(self):
-        self.fw.turn_right()
+        self.turn(MAXRIGHTANGLE)
 
     # Tourner à un angle, en degrés. 90 est tout droit.
     def turn(self, angle):
